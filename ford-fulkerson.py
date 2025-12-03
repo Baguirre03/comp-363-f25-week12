@@ -15,15 +15,14 @@ import copy
 def ford_fulkerson(graph, source, target):
     residual = copy.deepcopy(graph)
     max_flow = 0
-    while True:
-        path = find_path(residual, source, target)
-        if path is None:
-            break
+    path = find_path(residual, source, target)
+    while path is not None:
         edges = [(path[i], path[i + 1]) for i in range(len(path) - 1)]
         min_capacity = min(residual[u][v] for u, v in edges)
         max_flow += min_capacity
         for u, v in edges:
             residual[u][v] -= min_capacity
+        path = find_path(residual, source, target)
     return max_flow
 
 
